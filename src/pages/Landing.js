@@ -1,6 +1,28 @@
 import logo from '../assets/logo.svg'
+import { debounce } from 'lodash'
+import {useCallback} from "react";
+
+const autocomplete = async ( name ) => {
+    const res = await fetch(`http://localhost:5000/autocomplete/${name}`)
+    const jsonres = await res.json()
+    return jsonres
+}
+
 
 const Landing = ({ song, setSong, setPage }) => {
+
+    const debouncedAutoComplete = useCallback(
+        debounce((name) => {
+        autocomplete(name)
+            .then((res) => console.log(res))
+    }, 300), [])
+
+    const changeHandler = (name) => {
+        setSong(name)
+        if (name.length > 0) {
+            debouncedAutoComplete(name)
+        }
+    }
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -22,7 +44,7 @@ const Landing = ({ song, setSong, setPage }) => {
                        className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white
                         bg-white rounded text-lg border-0 shadow outline-none focus:outline-none focus:ring
                          w-full pl-10"
-                       onChange={(e) => setSong(e.target.value)}
+                       onChange={(e) => changeHandler(e.target.value)}
                        value={song}
                 />
             </form>

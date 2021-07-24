@@ -3,9 +3,9 @@ import SongResult from "../components/SongResult";
 import FeatureList from "../components/FeatureList";
 import Result from "../components/Result";
 
-const Breakdown = ({ song, setSong, setPage }) => {
+const Breakdown = ({ song, setSong, setPage, artistName, setArtistName }) => {
     return (
-        <div>
+        <div className={'flex flex-col'}>
             <SongResult
                 img={{
                     hoverText: 'yes',
@@ -14,14 +14,14 @@ const Breakdown = ({ song, setSong, setPage }) => {
                 }}
                 song={{
                     songTitle: song,
-                    artist: 'artist'
+                    artist: artistName
                 }}
                 options={{
 
                 }}
             />
             <FeatureList />
-            <Result />
+            <Result artist={artistName} song={song} score={50} setPage={setPage}/>
         </div>
     )
 }
