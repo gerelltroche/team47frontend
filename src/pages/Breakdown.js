@@ -3,7 +3,8 @@ import SongResult from "../components/SongResult";
 import FeatureList from "../components/FeatureList";
 import Result from "../components/Result";
 
-const Breakdown = ({ song, setSong, setPage, artistName, setArtistName }) => {
+const Breakdown = ({ song, setSong, setPage, artistName, setArtistName, songs, setSongs, songSelection, selectSong, audioFeatures, setAudioFeatures }) => {
+
     return (
         <div className={'flex flex-col'}>
             <SongResult
@@ -13,15 +14,23 @@ const Breakdown = ({ song, setSong, setPage, artistName, setArtistName }) => {
                     alt: 'Image-alt'
                 }}
                 song={{
-                    songTitle: song,
-                    artist: artistName
+                    songTitle: songs['spotify_name'],
+                    artist: songs['spotify_artist']
                 }}
                 options={{
 
                 }}
             />
-            <FeatureList />
-            <Result artist={artistName} song={song} score={50} setPage={setPage}/>
+            <FeatureList
+                audioFeatures={audioFeatures}
+                setAudioFeatures={setAudioFeatures}
+            />
+            <Result
+                artistName={songSelection['artist']}
+                songName={songSelection['name']}
+                score={20}
+                setPage={setPage}
+            />
         </div>
     )
 }
